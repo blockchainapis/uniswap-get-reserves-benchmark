@@ -4,7 +4,8 @@ use super::models::Pairs;
 
 async fn get_pair(api_url: &String, api_key: &String, page: u32) -> Result<Pairs> {
     let client = reqwest::Client::new();
-    let response: Pairs = client.get(format!("{api_url}/v0/exchanges/pairs/?page={page}&blockchain=ethereum&exchange=uniswapv2_ethereum"))
+    let url = format!("{api_url}/v0/exchanges/pairs?page={page}&blockchain=ethereum&exchange=uniswapv2_ethereum");
+    let response: Pairs = client.get(url)
         .header("api-key", api_key)
         .send()
         .await?
