@@ -5,7 +5,7 @@ use ethers::{providers::{Provider, Http}, types::H160};
 use eyre::Result;
 use dotenv::dotenv;
 
-use pair_fetching_performance_benchmark::{config::args::Args, api::get_pairs::get_pairs, blockchain::get_reserves::get_reserves_blockchain};
+use pair_fetching_performance_benchmark::{config::args::Args, api::{get_pairs::get_pairs, get_reserves::get_reserves_blockchain_apis}, blockchain::get_reserves::get_reserves_blockchain};
 
 fn pair_h160_vec_to_string(pairs: &Vec<(H160, H160)>) -> Vec<(String, String)> {
     todo!("Not implemented")
@@ -26,6 +26,7 @@ async fn main() -> Result<()> {
 
     get_reserves_blockchain(provider, pairs, arguments.threads).await?;
 
+    get_reserves_blockchain_apis(api_url, api_key, string_pairs, arguments.threads).await?;
 
     Ok(())
 }
