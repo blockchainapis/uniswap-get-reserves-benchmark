@@ -7,7 +7,7 @@ use dotenv::dotenv;
 
 use pair_fetching_performance_benchmark::{config::args::Args, api::{get_pairs::get_pairs, get_reserves::get_reserves_blockchain_apis}, blockchain::get_reserves::get_reserves_blockchain};
 
-fn pair_h160_vec_to_string(pairs: &Vec<(H160, H160)>) -> Vec<(String, String)> {
+fn pair_string_to_h160_pairs(pairs: &Vec<(String, String)>) -> Vec<(H160, H160)> {
     todo!("Not implemented")
 }
 
@@ -21,8 +21,8 @@ async fn main() -> Result<()> {
 
     let provider = Arc::new(Provider::<Http>::try_from(http_rpc)?);
 
-    let pairs = get_pairs(&api_url, &api_key, arguments.pair_amount).await?;
-    let string_pairs = pair_h160_vec_to_string(&pairs);
+    let string_pairs = get_pairs(&api_url, &api_key, arguments.pair_amount).await?;
+    let pairs = pair_string_to_h160_pairs(&string_pairs);
 
     get_reserves_blockchain(provider, pairs, arguments.threads).await?;
 
