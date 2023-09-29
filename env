@@ -1,0 +1,3 @@
+HTTP_RPC = "<RPC to access blockchain>"
+BLOCKCHAIN_APIS_URL = "<Url for blockchain APIs (without ending '/')>"
+BLOCKCHAIN_APIS_KEY = "<Key to access blockchain APIs>"
