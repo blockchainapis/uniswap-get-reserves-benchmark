@@ -1,11 +1,15 @@
 use std::{env, sync::Arc};
 
 use clap::Parser;
-use ethers::providers::{Provider, Http};
+use ethers::{providers::{Provider, Http}, types::H160};
 use eyre::Result;
 use dotenv::dotenv;
 
-use pair_fetching_performance_benchmark::config::args::Args;
+use pair_fetching_performance_benchmark::{config::args::Args, api::get_pairs::get_pairs, blockchain::get_reserves::get_reserves_blockchain};
+
+fn pair_h160_vec_to_string(pairs: &Vec<(H160, H160)>) -> Vec<(String, String)> {
+    todo!("Not implemented")
+}
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -17,6 +21,11 @@ async fn main() -> Result<()> {
 
     let provider = Arc::new(Provider::<Http>::try_from(http_rpc)?);
 
-    println!("Hello, world!");
+    let pairs = get_pairs(&api_url, &api_key, arguments.pair_amount).await?;
+    let string_pairs = pair_h160_vec_to_string(&pairs);
+
+    get_reserves_blockchain(provider, pairs, arguments.threads).await?;
+
+
     Ok(())
 }
