@@ -57,6 +57,7 @@ pub async fn get_reserves_blockchain_apis(api_url: String, api_key: String, pair
         handler.await?;
     }
 
+    pb.finish_and_clear();
     let duration = start.elapsed();
     println!("Took {:?} to gather uniswap reserves using Blockchain APIs", duration);
 
